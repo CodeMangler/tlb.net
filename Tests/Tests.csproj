@@ -9,9 +9,10 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TLB.NET</RootNamespace>
-    <AssemblyName>test</AssemblyName>
+    <AssemblyName>Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,33 +32,44 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Moq">
+      <HintPath>..\lib\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="NAnt.Core, Version=0.90.3780.0, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\NAnt.Core.dll</HintPath>
     </Reference>
-    <Reference Include="NAnt.DotNetTasks, Version=0.90.3780.0, Culture=neutral">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\NAnt.DotNetTasks.dll</HintPath>
+    <Reference Include="NAnt.DotNetTasks, Version=0.90.3780.0, Culture=neutral" />
+    <Reference Include="NAnt.NUnit2Tasks">
+      <HintPath>..\lib\NAnt.NUnit2Tasks.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.core">
-      <HintPath>..\lib\nunit.core.dll</HintPath>
+    <Reference Include="NAnt.Win32Tasks">
+      <HintPath>..\lib\NAnt.Win32Tasks.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LoadBalancedFileSetTest.cs" />
     <Compile Include="BalancerClientTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TLBNunit2TaskTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TLB.NET\TLBNETTasks.csproj">
       <Project>{720FC596-EF9F-4C54-9A94-8958CCD8255B}</Project>
       <Name>TLBNETTasks</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="Test.build">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

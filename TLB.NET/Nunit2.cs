@@ -11,7 +11,7 @@ using NAnt.NUnit2.Types;
 
 namespace NAnt.NUnit2.Tasks
 {
-    [TaskName("tlbnunit2")]
+//    [TaskName("tlbnunit2")]
     public class LoadBalancedNunit2Task : NUnit2Task
     {
 

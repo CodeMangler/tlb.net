@@ -1,6 +1,8 @@
-TLB.NET/bin
-TLB.NET/obj
 *.suo
-_ReSharper.TLBNETTasks
-test/obj
-test/bin
+*.user
+*.resharper
+_ReSharper.*
+bin
+obj
+Debug
+Release
