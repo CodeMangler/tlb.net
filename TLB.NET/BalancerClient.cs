@@ -3,50 +3,22 @@ using System.IO;
 using System.Net;
 using System.Text;
 
-namespace TLBNETTasks
+namespace NAnt.NUnit2.Tasks
 {
     public class BalancerClient
     {
-        private readonly string _host;
-        private readonly int _port;
+        private const string BalancerUrl = "http://10.4.3.55:3001/balance";
 
-        public BalancerClient(string host, int port)
+        public string PostRequestToBalancer(string listOfTestSuites)
         {
-            _host = host;
-            _port = port;
-        }
-
-        public string[] GetSuiteFilesFromIncludes(string[] fileList)
-        {
-            string listOfIncludeSuites = string.Join("\n", fileList);
-            string prunedListOfSuites = GetResponseFromBalancer("balance", listOfIncludeSuites);
-            return prunedListOfSuites.Split(new[] {"\n"}, StringSplitOptions.None);
-        }
-
-        public string PostSuiteTimes(string[] fileListWithTimes)
-        {
-            string listOfSuiteTimes = string.Join("\n", fileListWithTimes);
-            return GetResponseFromBalancer("suite_time", listOfSuiteTimes);
-        }
-
-        public string PostSuiteResults(string[] fileListWithResults)
-        {
-            string listOfSuiteResults = string.Join("\n", fileListWithResults);
-            return GetResponseFromBalancer("suite_result", listOfSuiteResults);
-        }
-
-        private Uri GetBalancerUrl(string route)
-        {
-            return new UriBuilder("http", _host, _port, route).Uri;
-        }
-
-        private string GetResponseFromBalancer(string route, string dataToPost)
-        {
-            var webRequest = (HttpWebRequest) WebRequest.Create(GetBalancerUrl(route));
+            var webRequest = (HttpWebRequest)WebRequest.Create(BalancerUrl);
+            webRequest.ContentType = "application/x-www-form-urlencoded";
             webRequest.Method = "POST";
-            byte[] bytes = Encoding.ASCII.GetBytes(dataToPost);
+            byte[] bytes = Encoding.ASCII.GetBytes(listOfTestSuites);
             Stream requestStream = webRequest.GetRequestStream();
             requestStream.Write(bytes, 0, bytes.Length);
+            requestStream.Close();
+            
             var webResponse = webRequest.GetResponse();
             Stream responseStream = webResponse.GetResponseStream();
             if (responseStream != null)
@@ -54,7 +26,7 @@ namespace TLBNETTasks
                 var sr = new StreamReader(responseStream);
                 return sr.ReadToEnd().Trim();
             }
-            return dataToPost;
+            throw new NotImplementedException("Bu hao");
         }
     }
 }
